@@ -1,3 +1,13 @@
+# Dependency
 node_modules/
+
+# API Key / Secrets
 .env
+
+# WhatsApp Web Session & Cache
 .wwebjs_auth/
+.wwebjs_cache/
+
+# System files
+.DS_Store
+Thumbs.db
