@@ -5,7 +5,7 @@ const fetch = require("node-fetch");
 
 // --- KONFIGURASI ---
 const API_KEY = process.env.GEMINI_API_KEY;
-// Gunakan model yang terbukti ada di list kamu sebelumnya
+
 const MODEL = "gemma-3-4b-it"; 
 
 const ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${API_KEY}`;
@@ -20,13 +20,13 @@ const client = new Client({
 
 // Menampilkan QR Code di terminal
 client.on('qr', (qr) => {
-    console.log('🚀 SCAN QR CODE INI UNTUK LOGIN:');
+    console.log('SCAN QR CODE INI UNTUK LOGIN:');
     qrcode.generate(qr, { small: true });
 });
 
 // Bot Siap
 client.on('ready', () => {
-    console.log('✅ WhatsApp Bot Berhasil Terhubung!');
+    console.log('WhatsApp Bot Berhasil Terhubung!');
 });
 
 // --- FUNGSI GEMINI AI ---
@@ -47,13 +47,13 @@ async function tanyaGemini(pesanUser) {
 
         // --- DEBUGGING: Lihat apa yang dikirim Google ke terminal ---
         if (data.error) {
-            console.log("❌ ERROR DARI GOOGLE:", data.error.message);
+            console.log("ERROR DARI GOOGLE:", data.error.message);
             return `Maaf, ada error dari Google: ${data.error.message}`;
         }
 
         // Cek apakah ada candidate (jawaban)
         if (!data.candidates || data.candidates.length === 0) {
-            console.log("⚠️ GOOGLE TIDAK MEMBERIKAN JAWABAN. Data:", JSON.stringify(data));
+            console.log("GOOGLE TIDAK MEMBERIKAN JAWABAN. Data:", JSON.stringify(data));
             return "Maaf, AI tidak memberikan jawaban. Mungkin pesan mengandung kata sensitif.";
         }
 
@@ -63,12 +63,12 @@ async function tanyaGemini(pesanUser) {
         if (hasilTeks) {
             return hasilTeks;
         } else {
-            console.log("⚠️ STRUKTUR TEKS TIDAK DITEMUKAN. Data:", JSON.stringify(data));
+            console.log("STRUKTUR TEKS TIDAK DITEMUKAN. Data:", JSON.stringify(data));
             return "Maaf, format jawaban AI tidak dikenali.";
         }
 
     } catch (error) {
-        console.error("❌ KESALAHAN SISTEM:", error.message);
+        console.error("KESALAHAN SISTEM:", error.message);
         return "Terjadi kesalahan koneksi pada server bot.";
     }
 }
@@ -81,7 +81,7 @@ client.on('message', async (msg) => {
     
     // Opsi: Hanya balas chat pribadi (bukan grup)
     if (!chat.isGroup) {
-        console.log(`📩 Chat dari ${msg.from}: ${msg.body}`);
+        console.log(`Chat dari ${msg.from}: ${msg.body}`);
 
         // Berikan efek "typing..." di WhatsApp
         chat.sendStateTyping();
